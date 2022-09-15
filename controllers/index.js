@@ -353,8 +353,8 @@ const removeDiscFromUser = async (req,res) =>{
         })
 
         console.log(discRemove)
-        
-        const index = userDiscs.indexOf(discRemove)
+
+        const index = userDiscs.indexOf(discRemove[0])
 
         console.log('index',index)
 
