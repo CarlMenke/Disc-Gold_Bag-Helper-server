@@ -35,5 +35,7 @@ router.get('/posts-by-user/:user_id', controllers.getPostByUser)
 
 router.put('/updateUserDiscs/:id', controllers.addDiscToUser)
 
+router.get('/delete/disc/:discNameSlug/:user_id', controllers.removeDiscFromUser)
+
 
 module.exports = router

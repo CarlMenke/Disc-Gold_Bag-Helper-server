@@ -322,6 +322,32 @@ const addDiscToUser = async (req,res) =>{
     }
 }
 
+const removeDiscFromUser = async (req,res) =>{
+    try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+        const discNameSlug = req.params.discNameSlug;
+
+        const user = await User.find({_id:`${req.params.user_id}`})
+
+        let userDiscs = user.userDiscs
+
+        const index = userDiscs.indexOf(disc => disc.name_slug === discNameSlug)
+
+        userDiscs.splice(index,1)
+
+        const response = await User.updateOne({_id:`${req.params.user_id}`}, { $set: {'userDiscs': userDiscs}})
+
+        return res.status(200).send(response)
+
+    }catch(error){
+        res.status(500).json({error:error.message})
+    }
+}
+
 
 //exports  controller funcitons
 module.exports = {
@@ -340,5 +366,6 @@ module.exports = {
     getPostByTopic,
     getPostByUser,
     addDiscToUser,
-    initalizeIndex
+    initalizeIndex,
+    removeDiscFromUser,
 }
