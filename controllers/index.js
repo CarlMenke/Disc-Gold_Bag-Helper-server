@@ -324,20 +324,35 @@ const addDiscToUser = async (req,res) =>{
 
 const removeDiscFromUser = async (req,res) =>{
     try{
+
+        console.log('insdie try')
+
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
+        console.log('req.params.discNameSlug',req.params.discNameSlug)
+
         const discNameSlug = req.params.discNameSlug;
+
+        console.log('discNameSlugd',discNameSlug)
 
         const user = await User.find({_id:`${req.params.user_id}`})
 
+        console.log('user',user)
+
         let userDiscs = user.userDiscs
+
+        console.log('userDiscs',userDiscs)
 
         const index = userDiscs.indexOf(disc => disc.name_slug === discNameSlug)
 
+        console.log('index',index)
+
         userDiscs.splice(index,1)
+
+        console.log('userDiscs post splice', userDiscs)
 
         const response = await User.updateOne({_id:`${req.params.user_id}`}, { $set: {'userDiscs': userDiscs}})
 
