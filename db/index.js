@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 mongoose
-.connect('"mongodb+srv://dgb:dgb@dgb-database.cnmbjgn.mongodb.net/?retryWrites=true&w=majority"')
+.connect("mongodb+srv://dgb:dgb@dgb-database.cnmbjgn.mongodb.net/?retryWrites=true&w=majority")
 .then(()=>{
     console.log('successfully connected to egdb')
 })
