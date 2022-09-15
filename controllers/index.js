@@ -346,7 +346,13 @@ const removeDiscFromUser = async (req,res) =>{
 
         console.log('userDiscs',userDiscs)
 
-        const index = userDiscs.indexOf(disc => disc.name_slug === discNameSlug)
+        const index = userDiscs.indexOf((disc) => {
+            console.log('disc',disc)
+            console.log(discNameSlug)
+
+
+            return disc.name_slug === discNameSlug
+        })
 
         console.log('index',index)
 
