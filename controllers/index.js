@@ -231,7 +231,7 @@ const getPostIndex = async (req,res) =>{
     }
 }
 
-const resetPostIndex = async(req,res) =>{
+const initalizeIndex = async(req,res) =>{
 
     try{
         res.setHeader("Access-Control-Allow-Origin", "*");
@@ -244,29 +244,29 @@ const resetPostIndex = async(req,res) =>{
         await postIndex.save()
 
         res.status(200).send(postIndex)
-        
+
     }catch(error){
         res.status(500).send({error:error.message})
     }
 
 }
 
-// const resetPostIndex = async(req,res) =>{
+const resetPostIndex = async(req,res) =>{
 
-//     try{
-//         res.setHeader("Access-Control-Allow-Origin", "*");
-//         res.setHeader("Access-Control-Allow-Credentials", "true");
-//         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-//         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+    try{
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Credentials", "true");
+        res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         
-//         const response = await PostIndex.updateOne({}, {index: 0})
+        const response = await PostIndex.updateOne({}, {index: 0})
 
-//         res.status(200).send(response[0].index)
-//     }catch(error){
-//         res.status(500).send({error:error.message})
-//     }
+        res.status(200).send(response[0].index)
+    }catch(error){
+        res.status(500).send({error:error.message})
+    }
 
-// }
+}
 
 const wipePosts = async(req,res) =>{
     try{
@@ -340,4 +340,5 @@ module.exports = {
     getPostByTopic,
     getPostByUser,
     addDiscToUser,
+    initalizeIndex
 }
