@@ -342,7 +342,7 @@ const removeDiscFromUser = async (req,res) =>{
 
         console.log('user',user)
 
-        let userDiscs = user.userDiscs
+        let userDiscs = user[0].userDiscs
 
         console.log('userDiscs',userDiscs)
 
