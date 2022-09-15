@@ -239,14 +239,34 @@ const resetPostIndex = async(req,res) =>{
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         
-        const response = await PostIndex.insertOne({index: 0})
+        const postIndex = await new PostIndex({index:0})
 
-        res.status(200).send(response[0].index)
+        await postIndex.save()
+
+        res.status(200).send(postIndex)
+        
     }catch(error){
         res.status(500).send({error:error.message})
     }
 
 }
+
+// const resetPostIndex = async(req,res) =>{
+
+//     try{
+//         res.setHeader("Access-Control-Allow-Origin", "*");
+//         res.setHeader("Access-Control-Allow-Credentials", "true");
+//         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+//         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+        
+//         const response = await PostIndex.updateOne({}, {index: 0})
+
+//         res.status(200).send(response[0].index)
+//     }catch(error){
+//         res.status(500).send({error:error.message})
+//     }
+
+// }
 
 const wipePosts = async(req,res) =>{
     try{
