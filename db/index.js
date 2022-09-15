@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 mongoose
-.connect('https://dgb-server.herokuapp.com/api' )
+.connect('mongodb+srv://carlmenke13:dgb@dgb.n9z04.mongodb.net/sample_mflix?retryWrites=true&w=majority')
 .then(()=>{
     console.log('successfully connected to egdb')
 })
