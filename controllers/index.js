@@ -9,15 +9,13 @@ const bcrypt = require('bcrypt');
 // used to create a new user
 
 const createUser = async (req,res) =>{
-
     try{
-
         const userName = req.params.userName;  
         let profilePic = req.body.profilePic;
 
         function isImage(url) {
             return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
-          }
+        }
 
         if(!isImage(profilePic)){
             profilePic = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg'
@@ -45,7 +43,6 @@ const createUser = async (req,res) =>{
 }
 
 const getPostByTopic = async (req,res) =>{
-
     try{
         const response = await Post.find({topic_id: req.params.topic_id})
 
@@ -53,42 +50,37 @@ const getPostByTopic = async (req,res) =>{
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-        
 
         return res.status(200).json(response)
     }catch(error){
         return res.status(500).json({error: error.message})
     }
-
 }
 
 const getPostByUser = async (req,res) =>{
-
     try{
         const response = await Post.find({user_id: req.params.user_id})
-        console.log(response)
+
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-        
 
         return res.status(200).json(response)
     }catch(error){
         return res.status(500).json({error: error.message})
     }
-
 }
 
 const checkUser = async (req, res) =>{
     try{
         const userName  = req.params.userName
         const user = await User.find({userName:userName})
+
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-        
 
         if (user.length < 1){
             res.status(200).send({exists: false})
@@ -97,7 +89,6 @@ const checkUser = async (req, res) =>{
         }else{
             res.status(200).send('Password Incorrect')
         }
-
     }catch(error){
         res.status(500).send({error:error.message})
     }
@@ -111,6 +102,7 @@ const getAllUsers = async (req, res) =>{
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         
         const users = await User.find({})
+
         return res.status(200).send(users)
     }catch(error){
         res.status(500).send({error:error.message})
@@ -125,6 +117,7 @@ const getUser = async (req,res)=>{
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         
         const user = await User.find({_id:`${req.params.id}`})
+
         return res.status(200).send(user)
     }catch(error){
         res.status(500).send({error:error.message})
@@ -138,11 +131,10 @@ const deleteUser = async (req, res )=>{
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         
-        console.log(req.params.id)
         const deletedPost = await Post.deleteMany({user_id:`${req.params.id}`})
 
-        console.log(deletedPost)
         await User.deleteOne({_id:`${req.params.id}`})
+
         return res.status(200).send('Your account has been succesfully deleted.')
     }catch(error){
         res.status(500).send({error:error.message})
@@ -157,6 +149,7 @@ const updateUser = async (req, res )=>{
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         
         await User.updateOne({_id:`${req.params.id}`},{userName:`${req.params.newName}`})
+
         return res.status(200).send(`Your User Name has been succesfully updated to ${req.params.newName}.`)
     }catch(error){
         res.status(500).send({error:error.message})
@@ -165,7 +158,6 @@ const updateUser = async (req, res )=>{
 
 const getRecentPosts = async(req,res) =>{
 
-    let rescentPostArray = []
     try{
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -177,8 +169,6 @@ const getRecentPosts = async(req,res) =>{
         response.sort((a,b) =>{
             return b.index - a.index
         })
-
-
 
         res.status(200).send(response)
     }catch(error){
@@ -217,8 +207,7 @@ const createPost = async (req,res) =>{
 }
 
 const getPostIndex = async (req,res) =>{
-
-    try{
+     try{
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
@@ -232,7 +221,6 @@ const getPostIndex = async (req,res) =>{
 }
 
 const initalizeIndex = async(req,res) =>{
-
     try{
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -248,11 +236,9 @@ const initalizeIndex = async(req,res) =>{
     }catch(error){
         res.status(500).send({error:error.message})
     }
-
 }
 
 const resetPostIndex = async(req,res) =>{
-
     try{
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -265,7 +251,6 @@ const resetPostIndex = async(req,res) =>{
     }catch(error){
         res.status(500).send({error:error.message})
     }
-
 }
 
 const wipePosts = async(req,res) =>{
@@ -305,13 +290,11 @@ const addDiscToUser = async (req,res) =>{
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
-
         const newDisc = req.body.disc
         let newDiscArray = [];
 
         const user = await User.find({_id:`${req.params.id}`})
         newDiscArray = [...user[0].userDiscs, newDisc]
-
 
         const response = await User.updateOne({_id:`${req.params.id}`}, { $set: {'userDiscs': newDiscArray}})
 
@@ -324,48 +307,28 @@ const addDiscToUser = async (req,res) =>{
 
 const removeDiscFromUser = async (req,res) =>{
     try{
-
-        console.log('insdie try')
-
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
-        console.log('req.params.discNameSlug',req.params.discNameSlug)
-
         const discNameSlug = req.params.discNameSlug;
-
-        console.log('discNameSlugd',discNameSlug)
 
         const user = await User.find({_id:`${req.params.user_id}`})
 
-        console.log('user',user)
-
         let userDiscs = user[0].userDiscs
 
-        console.log('userDiscs',userDiscs)
-
         const discRemove = userDiscs.filter((disc) => {
-            console.log('disc', disc)
-            console.log(discNameSlug)
             return disc.name_slug === discNameSlug
         })
 
-        console.log(discRemove)
-
         const index = userDiscs.indexOf(discRemove[0])
 
-        console.log('index',index)
-
         userDiscs.splice(index,1)
-
-        console.log('userDiscs post splice', userDiscs)
 
         await User.updateOne({_id:`${req.params.user_id}`}, { $set: {'userDiscs': userDiscs}})
 
         return res.status(200).send(userDiscs)
-
     }catch(error){
         res.status(500).json({error:error.message})
     }

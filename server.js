@@ -6,11 +6,8 @@ const logger = require('morgan');
 const cors = require('cors')
 const controllers = require('./controllers')
 
-
 //PORT Access
 const PORT = process.env.PORT || 3001
-
-
 const app = express()
 
 app.use(cors(),function(req, res, next) {
@@ -18,14 +15,9 @@ app.use(cors(),function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
   });
-
 app.use(logger('dev'))
-
-
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use('/api', routes);
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
